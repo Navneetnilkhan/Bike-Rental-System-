@@ -1,0 +1,61 @@
+class Bike_Showroom:
+    def __init__(self, bikes):
+        self.bikes = bikes
+        self.daily_rent = 25
+        self.weekly_rent = self.daily_rent * 7
+        self.monthly_rent = self.daily_rent * 30
+        
+    def display_bikes(self):
+        print("Bikes available for rent:")
+        for bike in self.bikes:
+            print(" - " + bike)
+            
+    def display_rental_charges(self):
+        print("Rental charges:")
+        print(" - Daily: Rs{}".format(self.daily_rent))
+        print(" - Weekly: Rs{}".format(self.weekly_rent))
+        print(" - Monthly: Rs{}".format(self.monthly_rent))
+        
+    def rent_bike(self, bike, duration):
+        if bike in self.bikes:
+            self.bikes.remove(bike)
+            bill = 0
+            if duration == "daily":
+                bill = self.daily_rent
+            elif duration == "weekly":
+                bill = self.weekly_rent
+            elif duration == "monthly":
+                bill = self.monthly_rent
+            print("You have rented the {} bike for {} {}(s).
+            Your total bill is Rs{}.".format(bike, duration, "day" if duration == "daily" else "week" if duration == "weekly" else "month", bill))
+        else:
+            print("Sorry, the {} bike is not available for rent.".format(bike))
+            
+    def return_bike(self, bike):
+        self.bikes.append(bike)
+        print("Thank you for returning the {} bike.".format(bike))
+        
+class Customer:
+    def rent_bike(self, showroom, bike, duration):
+        showroom.rent_bike(bike, duration)
+        
+    def return_bike(self, showroom, bike):
+        showroom.return_bike(bike)
+
+bikes = ["Honda", "Suzuki", "Yamaha", "Pulser"]
+showroom = Bike_Showroom(bikes)
+customer = Customer()
+
+print("Welcome to the Bike Rental System!")
+showroom.display_bikes()
+showroom.display_rental_charges()
+
+customer.rent_bike(showroom, "Honda", "daily")
+customer.rent_bike(showroom, "Suzuki", "weekly")
+customer.rent_bike(showroom, "Yamaha", "monthly")
+customer.rent_bike(showroom, "Pulser", "daily")
+
+customer.return_bike(showroom, "Honda")
+customer.return_bike(showroom, "Suzuki")
+
+showroom.display_bikes()
